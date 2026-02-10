@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Separator } from "@/components/ui/separator";
 import { UserPlus, Mail, Lock, User, Eye, EyeOff, Ticket, Check } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
 
 export default function RegisterPage() {
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,9 @@ export default function RegisterPage() {
         confirmPassword: "",
     });
     const [acceptTerms, setAcceptTerms] = useState(false);
+    const [error, setError] = useState<string | null>(null);
     const router = useRouter();
+    const supabase = createClient();
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -38,24 +41,61 @@ export default function RegisterPage() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError(null);
+
         if (formData.password !== formData.confirmPassword) {
-            alert("Passwords do not match!");
+            setError("Passwords do not match!");
             return;
         }
         if (!acceptTerms) {
-            alert("Please accept the terms and conditions.");
+            setError("Please accept the terms and conditions.");
             return;
         }
 
         setIsLoading(true);
 
-        // TODO: Implement Supabase registration
-        // New users will be created with 'client' role by default
+        try {
+            const { error: signUpError, data } = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+                options: {
+                    data: {
+                        first_name: formData.firstName,
+                        last_name: formData.lastName,
+                        role: 'client' // Default role
+                    }
+                }
+            });
 
-        setTimeout(() => {
+            if (signUpError) {
+                setError(signUpError.message);
+                return;
+            }
+
+            // Success, user created. 
+            // Note: If email confirmation is enabled, they won't be able to login yet.
+            // But we will forward them to login page or dashboard.
+
+            // If session exists immediately (email confirm disabled or auto-confirm)
+            if (data.session) {
+                // If we also need to insert into user_roles table manually, we should do it here via API route or Trigger.
+                // Assuming Trigger handles it or we rely on metadata. 
+                // For now, metadata has role 'client'.
+
+                router.refresh();
+                router.push("/");
+            } else {
+                // Email confirmation required
+                alert("Account created! Please check your email to confirm your account.");
+                router.push("/login");
+            }
+
+        } catch (err) {
+            setError("An unexpected error occurred during registration.");
+            console.error(err);
+        } finally {
             setIsLoading(false);
-            router.push("/");
-        }, 2000);
+        }
     };
 
     const { strength, label, color } = passwordStrength();
@@ -81,6 +121,12 @@ export default function RegisterPage() {
                     </CardHeader>
                     <CardContent>
                         <form onSubmit={handleSubmit} className="space-y-4">
+                            {error && (
+                                <div className="bg-red-50 text-red-600 p-3 rounded-md text-sm dark:bg-red-900/20 dark:text-red-400">
+                                    {error}
+                                </div>
+                            )}
+
                             {/* Name Fields */}
                             <div className="grid gap-4 sm:grid-cols-2">
                                 <div className="space-y-2">

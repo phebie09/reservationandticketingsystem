@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { CalendarCheck, Ticket, User, Clock } from "lucide-react";
 
-export default function ClientLayout({
+export default function DashboardLayout({
     children,
 }: {
     children: React.ReactNode;
@@ -12,7 +12,7 @@ export default function ClientLayout({
             <nav className="border-b bg-white dark:bg-zinc-950">
                 <div className="container mx-auto flex h-12 items-center gap-6 px-4">
                     <Link
-                        href="/"
+                        href="/dashboard"
                         className="flex items-center gap-2 text-sm font-medium transition-colors hover:text-blue-600"
                     >
                         <User className="h-4 w-4" />
