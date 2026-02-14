@@ -15,6 +15,7 @@ import { createClient } from "@/lib/supabase/client";
 export default function RegisterPage() {
     const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -135,7 +136,7 @@ export default function RegisterPage() {
                                         <User className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                                         <Input
                                             id="firstName"
-                                            placeholder="John"
+                                            placeholder="Pedro"
                                             value={formData.firstName}
                                             onChange={handleChange}
                                             className="pl-10"
@@ -147,7 +148,7 @@ export default function RegisterPage() {
                                     <Label htmlFor="lastName">Last Name</Label>
                                     <Input
                                         id="lastName"
-                                        placeholder="Doe"
+                                        placeholder="Gil"
                                         value={formData.lastName}
                                         onChange={handleChange}
                                         required
@@ -163,7 +164,7 @@ export default function RegisterPage() {
                                     <Input
                                         id="email"
                                         type="email"
-                                        placeholder="name@example.com"
+                                        placeholder="name@gmail.com"
                                         value={formData.email}
                                         onChange={handleChange}
                                         className="pl-10"
@@ -218,13 +219,20 @@ export default function RegisterPage() {
                                     <Lock className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                                     <Input
                                         id="confirmPassword"
-                                        type="password"
+                                        type={showConfirmPassword ? "text" : "password"}
                                         placeholder="Confirm your password"
                                         value={formData.confirmPassword}
                                         onChange={handleChange}
                                         className="pl-10"
                                         required
                                     />
+                                    <button
+                                        type="button"
+                                        onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                                    >
+                                        {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                                    </button>
                                     {formData.confirmPassword && formData.password === formData.confirmPassword && (
                                         <Check className="absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-green-500" />
                                     )}

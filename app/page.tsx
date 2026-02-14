@@ -7,10 +7,10 @@ export default function Home() {
             <div className="max-w-4xl space-y-8">
                 <div className="space-y-4">
                     <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl text-zinc-900 dark:text-zinc-50">
-                        Streamline Your <span className="text-blue-600">Reservations</span>
+                        <span className="text-red-600">Super</span><span className="text-blue-600">lines</span>
                     </h1>
                     <p className="mx-auto max-w-[600px] text-lg text-zinc-600 dark:text-zinc-400 sm:text-xl">
-                        A comprehensive ticketing system powered by Next.js, Supabase, and Shadcn UI. Manage, track, and secure your bookings with ease.
+                        A comprehensive and integrated reservation & ticketing system powered by our team. Manage, track, and secure your bookings with ease.
                     </p>
                 </div>
 
@@ -23,8 +23,8 @@ export default function Home() {
                             <CalendarCheck className="h-6 w-6" />
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-xl font-bold">Reservations</h3>
-                            <p className="text-sm text-zinc-500">Manage all incoming bookings and schedules.</p>
+                            <h3 className="text-xl font-bold">Check Available Reservation</h3>
+                            <p className="text-sm text-zinc-500">Listed all incoming bookings and schedules.</p>
                         </div>
                     </Link>
 
@@ -36,7 +36,7 @@ export default function Home() {
                             <Ticket className="h-6 w-6" />
                         </div>
                         <div className="space-y-2">
-                            <h3 className="text-xl font-bold">Tickets</h3>
+                            <h3 className="text-xl font-bold">Buy a Ticket</h3>
                             <p className="text-sm text-zinc-500">Issue and validate event tickets seamlessly.</p>
                         </div>
                     </Link>
@@ -50,14 +50,14 @@ export default function Home() {
                         </div>
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold">Onboarding</h3>
-                            <p className="text-sm text-zinc-500">Create accounts and manage user profiles.</p>
+                            <p className="text-sm text-zinc-500">Create an account and manage your profiles.</p>
                         </div>
                     </Link>
                 </div>
 
                 <div className="flex items-center justify-center gap-2 text-sm text-zinc-500">
                     <ShieldCheck className="h-4 w-4" />
-                    <span>Secure authentication via Supabase Auth</span>
+                    <span>Secured Authentication.</span>
                 </div>
             </div>
         </div>
