@@ -6,7 +6,19 @@ import { createClient } from "@/lib/supabase/server";
 
 export default async function ClientDashboard() {
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+        // This should be handled by middleware, but as a safety net:
+        return (
+            <div className="flex h-[50vh] flex-col items-center justify-center gap-4">
+                <p className="text-muted-foreground">Please log in to view your dashboard.</p>
+                <Link href="/login">
+                    <Button>Go to Login</Button>
+                </Link>
+            </div>
+        );
+    }
 
     // Fetch user profile
     const { data: profile } = await supabase
@@ -140,8 +152,8 @@ export default async function ClientDashboard() {
                                         </div>
                                         <div className="flex flex-col items-end gap-2">
                                             <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${res.reservation_status === 'confirmed'
-                                                    ? 'bg-green-100 text-green-700'
-                                                    : 'bg-yellow-100 text-yellow-700'
+                                                ? 'bg-green-100 text-green-700'
+                                                : 'bg-yellow-100 text-yellow-700'
                                                 }`}>
                                                 {res.reservation_status}
                                             </span>

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { Ticket, CalendarCheck, ShieldCheck, UserCircle } from "lucide-react";
+import { CalendarCheck, ShieldCheck } from "lucide-react";
 
 export default function Home() {
+    // This page is only shown to client users (admins are redirected to /admin by middleware)
     return (
         <div className="flex min-h-[calc(100vh-64px)] flex-col items-center justify-center p-6 text-center">
             <div className="max-w-4xl space-y-8">
@@ -14,10 +15,11 @@ export default function Home() {
                     </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="flex justify-center">
+                    {/* Check Available Reservation */}
                     <Link
-                        href="/admin/reservations"
-                        className="group relative flex flex-col items-center gap-4 rounded-2xl border bg-white p-8 transition-all hover:border-blue-500 hover:shadow-lg dark:bg-zinc-900"
+                        href="/dashboard"
+                        className="group relative flex flex-col items-center gap-4 rounded-2xl border bg-white p-8 transition-all hover:border-blue-500 hover:shadow-lg dark:bg-zinc-900 w-full max-w-sm"
                     >
                         <div className="rounded-full bg-blue-100 p-4 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-900/30">
                             <CalendarCheck className="h-6 w-6" />
@@ -25,32 +27,6 @@ export default function Home() {
                         <div className="space-y-2">
                             <h3 className="text-xl font-bold">Check Available Reservation</h3>
                             <p className="text-sm text-zinc-500">Listed all incoming bookings and schedules.</p>
-                        </div>
-                    </Link>
-
-                    <Link
-                        href="/admin/tickets"
-                        className="group relative flex flex-col items-center gap-4 rounded-2xl border bg-white p-8 transition-all hover:border-green-500 hover:shadow-lg dark:bg-zinc-900"
-                    >
-                        <div className="rounded-full bg-green-100 p-4 transition-colors group-hover:bg-green-600 group-hover:text-white dark:bg-green-900/30">
-                            <Ticket className="h-6 w-6" />
-                        </div>
-                        <div className="space-y-2">
-                            <h3 className="text-xl font-bold">Buy a Ticket</h3>
-                            <p className="text-sm text-zinc-500">Issue and validate event tickets seamlessly.</p>
-                        </div>
-                    </Link>
-
-                    <Link
-                        href="/register"
-                        className="group relative flex flex-col items-center gap-4 rounded-2xl border bg-white p-8 transition-all hover:border-purple-500 hover:shadow-lg dark:bg-zinc-900 sm:col-span-2 lg:col-span-1"
-                    >
-                        <div className="rounded-full bg-purple-100 p-4 transition-colors group-hover:bg-purple-600 group-hover:text-white dark:bg-purple-900/30">
-                            <UserCircle className="h-6 w-6" />
-                        </div>
-                        <div className="space-y-2">
-                            <h3 className="text-xl font-bold">Onboarding</h3>
-                            <p className="text-sm text-zinc-500">Create an account and manage your profiles.</p>
                         </div>
                     </Link>
                 </div>

@@ -2,6 +2,15 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { CalendarCheck, Ticket, Users, TrendingUp } from "lucide-react";
 import { createClient } from "@/lib/supabase/server";
 
+interface RecentReservation {
+    id: string;
+    created_at: string;
+    reservation_status: string;
+    customers: {
+        full_name: string;
+    } | null;
+}
+
 export default async function AdminDashboard() {
     const supabase = await createClient();
 
@@ -103,7 +112,7 @@ export default async function AdminDashboard() {
                 <CardContent>
                     <div className="space-y-4">
                         {recentReservations && recentReservations.length > 0 ? (
-                            recentReservations.map((res: any) => (
+                            recentReservations.map((res: RecentReservation) => (
                                 <div key={res.id} className="flex items-center gap-4 rounded-lg border p-4">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900/30">
                                         <CalendarCheck className="h-5 w-5 text-blue-600" />
@@ -115,8 +124,8 @@ export default async function AdminDashboard() {
                                         </p>
                                     </div>
                                     <span className={`rounded-full px-2 py-1 text-xs font-medium ${res.reservation_status === 'confirmed'
-                                            ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                                            : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
+                                        ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
+                                        : 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400'
                                         }`}>
                                         {res.reservation_status}
                                     </span>

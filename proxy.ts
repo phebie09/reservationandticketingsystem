@@ -56,9 +56,19 @@ export default async function proxy(request: NextRequest) {
     const url = new URL(request.url)
 
     // Define public paths that don't require authentication
-    // Note: / is public (Landing Page)
-    const publicPaths = ['/login', '/register', '/']
+    const publicPaths = ['/login', '/register']
     const isPublicPath = publicPaths.some(path => url.pathname === path || url.pathname.startsWith(path + '/'))
+
+    // Protect root page - require authentication
+    // Admins go directly to /admin dashboard, clients see the 2-card landing page
+    if (url.pathname === '/') {
+        if (!user) {
+            return NextResponse.redirect(new URL('/login', request.url))
+        }
+        if (role === 'admin') {
+            return NextResponse.redirect(new URL('/admin', request.url))
+        }
+    }
 
     // Protect /admin routes - require admin role
     if (url.pathname.startsWith('/admin')) {

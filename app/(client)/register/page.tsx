@@ -60,6 +60,7 @@ export default function RegisterPage() {
                 email: formData.email,
                 password: formData.password,
                 options: {
+                    emailRedirectTo: `${window.location.origin}/auth/callback?next=/reservations`,
                     data: {
                         first_name: formData.firstName,
                         last_name: formData.lastName,
@@ -84,11 +85,12 @@ export default function RegisterPage() {
                 // For now, metadata has role 'client'.
 
                 router.refresh();
-                router.push("/");
+                router.push("/reservations");
             } else {
                 // Email confirmation required
+                // In production, this alert might be replaced with a nicer UI
                 alert("Account created! Please check your email to confirm your account.");
-                router.push("/login");
+                router.push("/login"); // Or maybe to a "Check Email" page? Defaulting to login for now.
             }
 
         } catch (err) {

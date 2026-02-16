@@ -307,7 +307,7 @@ export default function LoginPage() {
     );
 }
 
-function ArrowRightIcon(props: any) {
+function ArrowRightIcon(props: React.ComponentProps<'svg'>) {
     return (
         <svg
             {...props}
