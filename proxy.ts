@@ -61,14 +61,25 @@ export default async function proxy(request: NextRequest) {
 
     // Protect root page - require authentication
     // Admins go directly to /admin dashboard, clients see the 2-card landing page
-    if (url.pathname === '/') {
-        if (!user) {
-            return NextResponse.redirect(new URL('/login', request.url))
+    // if (url.pathname === '/') {
+    //     if (!user) {
+    //         return NextResponse.redirect(new URL('/login', request.url))
+    //     }
+    //     if (role === 'admin') {
+    //         return NextResponse.redirect(new URL('/admin', request.url))
+    //     }
+    // }
+    // Root page behavior
+        if (url.pathname === '/') {
+            // If admin, send to admin dashboard
+            if (user && role === 'admin') {
+                return NextResponse.redirect(new URL('/admin', request.url))
+            }
+
+            // Otherwise allow access to "/"
+            return response
         }
-        if (role === 'admin') {
-            return NextResponse.redirect(new URL('/admin', request.url))
-        }
-    }
+
 
     // Protect /admin routes - require admin role
     if (url.pathname.startsWith('/admin')) {
@@ -85,7 +96,7 @@ export default async function proxy(request: NextRequest) {
     // Protect /dashboard routes - require being logged in
     if (url.pathname.startsWith('/dashboard')) {
         if (!user) {
-            return NextResponse.redirect(new URL('/login', request.url))
+            return NextResponse.redirect(new URL('/', request.url))
         }
     }
 

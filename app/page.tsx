@@ -18,7 +18,7 @@ export default function Home() {
                 <div className="flex justify-center">
                     {/* Check Available Reservation */}
                     <Link
-                        href="/dashboard"
+                        href="/login"
                         className="group relative flex flex-col items-center gap-4 rounded-2xl border bg-white p-8 transition-all hover:border-blue-500 hover:shadow-lg dark:bg-zinc-900 w-full max-w-sm"
                     >
                         <div className="rounded-full bg-blue-100 p-4 transition-colors group-hover:bg-blue-600 group-hover:text-white dark:bg-blue-900/30">
