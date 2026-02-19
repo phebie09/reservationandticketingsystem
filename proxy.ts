@@ -56,7 +56,7 @@ export default async function proxy(request: NextRequest) {
     const url = new URL(request.url)
 
     // Define public paths that don't require authentication
-    const publicPaths = ['/login', '/register']
+    const publicPaths = ['/login', '/register', "/"]
     const isPublicPath = publicPaths.some(path => url.pathname === path || url.pathname.startsWith(path + '/'))
 
     // Protect root page - require authentication

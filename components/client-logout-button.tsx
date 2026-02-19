@@ -16,7 +16,7 @@ export function ClientLogoutButton() {
             setIsLoading(true);
             await supabase.auth.signOut();
             router.refresh(); // Refresh to clear server session state
-            router.push("/login");
+            router.push("/");
         } catch (error) {
             console.error("Logout failed:", error);
         } finally {
